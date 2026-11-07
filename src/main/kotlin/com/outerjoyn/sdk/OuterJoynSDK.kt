@@ -25,7 +25,7 @@ package com.outerjoyn.sdk
  */
 object OuterJoynSDK {
     // Keep equal to the publication version in build.gradle.kts.
-    const val VERSION = "1.2.0"
+    const val VERSION = "1.3.0"
 
     var appearance = OuterJoynAppearance()
         private set

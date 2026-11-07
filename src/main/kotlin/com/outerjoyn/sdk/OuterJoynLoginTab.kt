@@ -2,6 +2,7 @@ package com.outerjoyn.sdk
 
 import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -56,7 +57,11 @@ internal object OuterJoynLoginTab {
             finish(webView, id, afterDelivery = false)
             return
         }
-        val host = context as? Activity ?: return
+        val host = context.hostActivity()
+        if (host == null) {
+            finish(webView, id, afterDelivery = false)
+            return
+        }
         val loginUri = uri.buildUpon().clearQuery().apply {
             for (name in uri.queryParameterNames) {
                 if (name == "platform" || name == "redirect_uri") continue
@@ -64,6 +69,7 @@ internal object OuterJoynLoginTab {
             }
             appendQueryParameter("platform", "mobile")
             appendQueryParameter("redirect_uri", CALLBACK_URL)
+            appendQueryParameter("code_screen", "1")
         }.build()
         pending = Pending(id, webView, host)
         CustomTabsIntent.Builder().build().launchUrl(host, loginUri)
@@ -88,12 +94,14 @@ internal object OuterJoynLoginTab {
             callback.getQueryParameter("consumer_ref")?.let { payload.put("consumer_ref", it) }
             message.put("type", "outerjoyn:connect:complete").put("payload", payload)
         } else {
-            message.put("type", "outerjoyn:connect:error").put(
-                "payload",
-                JSONObject()
-                    .put("error", callback.getQueryParameter("error") ?: "unknown_error")
-                    .put("message", callback.getQueryParameter("error_description") ?: "Linking did not finish."),
-            )
+            val payload = JSONObject()
+                .put("error", callback.getQueryParameter("error") ?: "unknown_error")
+                .put("message", callback.getQueryParameter("error_description") ?: "Linking did not finish.")
+            // What the widget needs to ask for a confirmation code.
+            callback.getQueryParameter("details")
+                ?.let { runCatching { JSONObject(it) }.getOrNull() }
+                ?.let { payload.put("details", it) }
+            message.put("type", "outerjoyn:connect:error").put("payload", payload)
         }
         p.webView.evaluateJavascript("window.postMessage($message, '*');", null)
         finish(p.webView, p.id, afterDelivery = true)
@@ -110,6 +118,13 @@ internal object OuterJoynLoginTab {
         if (afterDelivery) webView.postDelayed({ webView.evaluateJavascript(script, null) }, 1000)
         else webView.evaluateJavascript(script, null)
     }
+}
+
+/** The sheet's dialog wraps its context, so the activity sits a few layers down. */
+private tailrec fun Context.hostActivity(): Activity? = when (this) {
+    is Activity -> this
+    is ContextWrapper -> baseContext.hostActivity()
+    else -> null
 }
 
 /** Receives the API's redirect at the end of a partner login. */

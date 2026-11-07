@@ -4,7 +4,7 @@ Let customers link their loyalty accounts, pay with points and more, from your A
 
 > **Beta.** The API may change before 2.0. Tell us what you hit: support@outerjoyn.com.
 
-Requires Android 7.0 (API 24)+ and Jetpack Compose.
+Requires Android 7.0 (API 24)+ and Jetpack Compose 1.7+ with material3 1.3+. Compile against SDK 34 or newer.
 
 ## Install
 
@@ -23,7 +23,7 @@ dependencyResolutionManagement {
 Then the dependency:
 
 ```kotlin
-implementation("com.github.OuterJoyn:outerjoyn-android:1.2.0")
+implementation("com.github.OuterJoyn:outerjoyn-android:1.3.0")
 ```
 
 ## Link an account

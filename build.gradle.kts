@@ -43,9 +43,9 @@ android {
 
 dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.compose.ui:ui:1.6.0")
-    implementation("androidx.compose.material3:material3:1.2.0")
-    implementation("androidx.compose.foundation:foundation:1.6.0")
+    implementation("androidx.compose.ui:ui:1.7.5")
+    implementation("androidx.compose.material3:material3:1.3.1")
+    implementation("androidx.compose.foundation:foundation:1.7.5")
     implementation("androidx.browser:browser:1.7.0") // Chrome Custom Tabs
     implementation("androidx.webkit:webkit:1.9.0")
 }
@@ -57,7 +57,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.OuterJoyn"
             artifactId = "outerjoyn-android"
-            version = "1.2.0"
+            version = "1.3.0"
 
             // AGP creates the "release" component during its own evaluation.
             afterEvaluate {
