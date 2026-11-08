@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application>
-        <!-- Receives outerjoyn://connect/callback after a partner login in a
-             Custom Tab. Merged into the host app's manifest: no setup needed. -->
+        <!-- Receives outerjoyn://connect/callback/<application id> after a partner
+             login in a Custom Tab. Merged into the host app's manifest, which
+             fills in its own application id, so two apps with the kit on one
+             phone never both claim a return. No setup needed. -->
         <activity
             android:name="com.outerjoyn.sdk.OuterJoynLoginCallbackActivity"
             android:exported="true"
@@ -13,7 +15,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="outerjoyn" android:host="connect" android:path="/callback" />
+                <data android:scheme="outerjoyn" android:host="connect" android:path="/callback/${applicationId}" />
             </intent-filter>
         </activity>
     </application>

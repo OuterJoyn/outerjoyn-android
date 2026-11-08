@@ -16,14 +16,16 @@ import org.json.JSONObject
  * The link widget opens a partner login with `window.open`. A WebView drops that
  * pop-up, and partners (Google among them) refuse logins in embedded views, so
  * the kit replaces `window.open` with a bridge: the login opens in a Custom Tab,
- * the API redirects to `outerjoyn://connect/callback` when it is done
- * ([OuterJoynLoginCallbackActivity] receives it), and the result is posted back
- * into the widget as the same message a web pop-up would send.
+ * the API redirects to this app's own `outerjoyn://connect/callback/<application id>`
+ * when it is done ([OuterJoynLoginCallbackActivity] receives it), and the result
+ * is posted back into the widget as the same message a web pop-up would send.
  */
 internal object OuterJoynLoginTab {
     private const val PARTNER_LOGIN_PATH = "/api/v1/connect/oauth/authorize"
-    // The API returns native logins only to its registered app schemes.
-    private const val CALLBACK_URL = "outerjoyn://connect/callback"
+    // The API returns native logins only to its registered app schemes. The path
+    // names this app, as the manifest's intent filter does, so another app with
+    // the kit can't receive this app's result.
+    private fun callbackUrl(context: Context) = "outerjoyn://connect/callback/${context.packageName}"
 
     /** Installed before the SDK script so it is in place when the widget loads. */
     val windowOpenBridge = """
@@ -68,7 +70,7 @@ internal object OuterJoynLoginTab {
                 for (value in uri.getQueryParameters(name)) appendQueryParameter(name, value)
             }
             appendQueryParameter("platform", "mobile")
-            appendQueryParameter("redirect_uri", CALLBACK_URL)
+            appendQueryParameter("redirect_uri", callbackUrl(host))
             appendQueryParameter("code_screen", "1")
         }.build()
         pending = Pending(id, webView, host)

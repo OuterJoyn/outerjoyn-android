@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1 (beta)
+
+- Each app returns from a partner login to its own address, so two apps with the kit on one phone no longer both offer to open the result.
+
 ## 1.3.0 (beta)
 
 - When a brand needs a confirmation code to link an account, the link sheet asks for it and finishes the link.
