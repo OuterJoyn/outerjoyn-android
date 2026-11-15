@@ -23,7 +23,7 @@ dependencyResolutionManagement {
 Then the dependency:
 
 ```kotlin
-implementation("com.github.OuterJoyn:outerjoyn-android:1.4.0")
+implementation("com.github.OuterJoyn:outerjoyn-android:1.5.0")
 ```
 
 ## Link an account
@@ -62,6 +62,10 @@ implementation("com.github.OuterJoyn:outerjoyn-android:1.4.0")
 3. **Treat the server as the source of truth**: subscribe to the `account_link.completed` webhook.
 
 No manifest entries are needed for partner logins; the SDK's return activity is merged into your app automatically.
+
+## Open in the app
+
+An offer button can open a brand's app. When the button is tapped the kit opens the app if it is installed, or the button's web page in the browser if not. Nothing to set up in your app.
 
 ## Look
 

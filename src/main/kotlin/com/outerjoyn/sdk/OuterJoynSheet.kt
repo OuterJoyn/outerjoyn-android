@@ -218,7 +218,13 @@ private fun OJWebView(
                                 payloadMap[key] = payload.opt(key)
                             }
                             Handler(Looper.getMainLooper()).post {
-                                if (type == "login") {
+                                if (type == "open_app_link") {
+                                    OuterJoynAppLink.open(
+                                        context,
+                                        payloadMap["appUrl"] as? String ?: return@post,
+                                        payloadMap["fallbackUrl"] as? String ?: return@post,
+                                    )
+                                } else if (type == "login") {
                                     OuterJoynLoginTab.open(
                                         context,
                                         webView,

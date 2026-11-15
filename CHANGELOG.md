@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.0 (beta)
+
+- "Open in the app" offer buttons open the brand's app when it is installed, else the button's web page in the browser. An https link counts only when an app, not a browser, takes it. No manifest `<queries>` entry needed.
+- The sheet uses your app's window colour: no white band or corners around the link window on dark apps.
+
 ## 1.4.0 (beta)
 
 - `OJWidgetConfig(partners = ...)` shows only the partner programs you name in the link sheet. One opens straight on its sign-in; several are the whole list. An id your store can't link ends on an error with code `partner_not_linkable`.
