@@ -23,7 +23,7 @@ dependencyResolutionManagement {
 Then the dependency:
 
 ```kotlin
-implementation("com.github.OuterJoyn:outerjoyn-android:1.3.1")
+implementation("com.github.OuterJoyn:outerjoyn-android:1.4.0")
 ```
 
 ## Link an account
@@ -52,7 +52,7 @@ implementation("com.github.OuterJoyn:outerjoyn-android:1.3.1")
        widget = OJWidget.Connect,
        config = OJWidgetConfig(
            sessionToken = token,
-           extras = mapOf("preselectedBrandId" to "<partner program id>"), // optional: skip the program list
+           partners = listOf("<partner program id>"), // optional: only these partners; one skips the program list
        ),
        onDismiss = { showLink = false },
        onSuccess = { result -> /* linked */ },

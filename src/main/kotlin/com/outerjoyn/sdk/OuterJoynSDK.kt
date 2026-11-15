@@ -25,7 +25,7 @@ package com.outerjoyn.sdk
  */
 object OuterJoynSDK {
     // Keep equal to the publication version in build.gradle.kts.
-    const val VERSION = "1.3.1"
+    const val VERSION = "1.4.0"
 
     var appearance = OuterJoynAppearance()
         private set
@@ -92,5 +92,11 @@ data class OJWidgetConfig(
      * here was silently dropped on Android while the identical iOS API worked.
      * Now honored; see the merge in OuterJoynSheet.kt.
      */
-    val extras: Map<String, Any> = emptyMap()
+    val extras: Map<String, Any> = emptyMap(),
+    /**
+     * Only these partner program ids (connect widget only). One opens straight
+     * on its sign-in; several are the whole list. An id the store can't link
+     * ends on an error with code `partner_not_linkable`.
+     */
+    val partners: List<String>? = null
 )

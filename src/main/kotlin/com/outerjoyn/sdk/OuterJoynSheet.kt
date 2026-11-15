@@ -19,6 +19,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import android.os.Handler
 import android.os.Looper
+import org.json.JSONArray
 import org.json.JSONObject
 
 /**
@@ -125,11 +126,13 @@ private fun OJWebView(
         config.shippingCents?.let { put("shippingCents", it) }
         config.direction?.let { put("direction", it) }
         config.lockTargetToBrand?.let { put("lockTargetToBrand", it) }
+        config.partners?.let { put("partners", JSONArray(it)) }
         // Connect fills the sheet edge to edge instead of drawing its own card.
         if (widget == OJWidget.Connect) put("presentation", "sheet")
         // Extras merge last, so they override the typed fields (as on iOS).
+        // wrap() turns a List or Map into JSON; put() alone would send its toString().
         for ((key, value) in config.extras) {
-            put(key, value)
+            put(key, JSONObject.wrap(value))
         }
     }
     // Escape </script> in serialized JSON to prevent HTML injection

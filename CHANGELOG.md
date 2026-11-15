@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.0 (beta)
+
+- `OJWidgetConfig(partners = ...)` shows only the partner programs you name in the link sheet. One opens straight on its sign-in; several are the whole list. An id your store can't link ends on an error with code `partner_not_linkable`.
+- Lists and maps in `extras` now reach the widget as JSON lists and objects.
+
 ## 1.3.1 (beta)
 
 - Each app returns from a partner login to its own address, so two apps with the kit on one phone no longer both offer to open the result.
