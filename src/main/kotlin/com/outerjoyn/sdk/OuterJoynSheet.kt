@@ -57,6 +57,9 @@ fun OuterJoynSheet(
             topStart = (appearance.shapes.cornerRadiusDp + 8).dp,
             topEnd = (appearance.shapes.cornerRadiusDp + 8).dp
         ),
+        // The app's own window colour, not Material's light default: a dark app
+        // otherwise gets a white band around the handle and white corners.
+        containerColor = appearance.colors.background,
         dragHandle = { BottomSheetDefaults.DragHandle() }
     ) {
         var isLoading by remember { mutableStateOf(true) }
@@ -198,6 +201,8 @@ private fun OJWebView(
             WebView(context).apply {
                 val webView = this
                 layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+                // The page paints its own surface; an opaque WebView shows white behind it (as iOS: isOpaque = false).
+                setBackgroundColor(android.graphics.Color.TRANSPARENT)
                 settings.javaScriptEnabled = true
                 settings.domStorageEnabled = true
 
