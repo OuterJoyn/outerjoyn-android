@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.2 (beta)
+
+- `OuterJoynPromotions` (Compose) and `OuterJoynPromotionsView` (a WebView) show a promotion set's offers inline, sized to fit. Pass `layout` and `look` (any saved set setting) for this spot only. Web pages and app links from offer buttons open outside the view; link and rewards buttons open the kit's sheet.
+
 ## 1.5.1 (beta)
 
 - The appearance you provide (`LocalOJAppearance`) now styles the hosted widgets, the link window included, not only the sheet around them.

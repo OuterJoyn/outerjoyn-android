@@ -63,6 +63,28 @@ implementation("com.github.OuterJoyn:outerjoyn-android:1.5.0")
 
 No manifest entries are needed for partner logins; the SDK's return activity is merged into your app automatically.
 
+## Offers
+
+Show a promotion set's offers inline. The view grows to fit its offers. Buttons that go to a web page open the browser, "Open in the app" buttons open the brand's app, and link or rewards buttons open the kit's sheet.
+
+```kotlin
+// Compose
+OuterJoynPromotions(
+    setId = "<promotion set id>",
+    layout = OJPromotionsLayout.Grid,                          // optional: instead of the set's own
+    look = mapOf("buttonColor" to "#e11d48", "columns" to 2),  // optional: any saved set setting, for this spot only
+    sessionToken = token,                                      // optional: null shows the offers everyone can see
+)
+
+// Views: OuterJoyn windows go to onOpenWidget (open an OuterJoynSheet there)
+val offers = OuterJoynPromotionsView(context)
+offers.onOpenWidget = { widget, partners -> /* show OuterJoynSheet(widget, OJWidgetConfig(token, partners = partners)) */ }
+offers.show(setId = "<promotion set id>", sessionToken = token)
+container.addView(offers)
+```
+
+`look` takes any setting from `GET /api/v1/promotion-sets/design-settings` (`accentColor`, `buttonColor`, `columns`, `bannerLook`, ...). Layouts: `Carousel`, `Grid`, `List`, `Hero`, `Strip`, `Banner`.
+
 ## Open in the app
 
 An offer button can open a brand's app. When the button is tapped the kit opens the app if it is installed, or the button's web page in the browser if not. Nothing to set up in your app.
