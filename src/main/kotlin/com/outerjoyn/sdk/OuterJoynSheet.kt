@@ -21,6 +21,7 @@ import android.os.Handler
 import android.os.Looper
 import org.json.JSONArray
 import org.json.JSONObject
+import androidx.compose.foundation.isSystemInDarkTheme
 
 /**
  * Material 3 bottom sheet that presents an OuterJoyn SDK widget.
@@ -117,6 +118,7 @@ private fun OJWebView(
 ) {
     val cssVars = appearance.toCSSVariables()
     val widgetName = widget.value
+    val webAppearance = appearance.toWebAppearance(isSystemInDarkTheme())
 
     val optionsObj = JSONObject().apply {
         put("sessionToken", config.sessionToken)
@@ -132,6 +134,7 @@ private fun OJWebView(
         config.partners?.let { put("partners", JSONArray(it)) }
         // Connect fills the sheet edge to edge instead of drawing its own card.
         if (widget == OJWidget.Connect) put("presentation", "sheet")
+        webAppearance?.let { put("appearance", it) }
         // Extras merge last, so they override the typed fields (as on iOS).
         // wrap() turns a List or Map into JSON; put() alone would send its toString().
         for ((key, value) in config.extras) {

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.1 (beta)
+
+- The appearance you provide (`LocalOJAppearance`) now styles the hosted widgets, the link window included, not only the sheet around them.
+- The widgets follow the phone's light or dark mode when the brand's OuterJoyn Design > Appearance is System. Pass `followDeviceColorScheme = false` to keep the brand's look.
+
 ## 1.5.0 (beta)
 
 - "Open in the app" offer buttons open the brand's app when it is installed, else the button's web page in the browser. An https link counts only when an app, not a browser, takes it. No manifest `<queries>` entry needed.

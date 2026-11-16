@@ -2,6 +2,7 @@ package com.outerjoyn.sdk
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import org.json.JSONObject
 
 /**
  * Stripe-inspired appearance configuration for OuterJoyn SDK widgets.
@@ -11,7 +12,11 @@ import androidx.compose.ui.graphics.Color
 data class OuterJoynAppearance(
     val colors: OJColors = OJColors(),
     val typography: OJTypography = OJTypography(),
-    val shapes: OJShapes = OJShapes()
+    val shapes: OJShapes = OJShapes(),
+    /** Match the phone's light or dark mode when the brand's window follows the
+     *  system (OuterJoyn Design > Appearance: System). A brand that chose Light
+     *  or Dark keeps it either way. */
+    val followDeviceColorScheme: Boolean = true
 )
 
 data class OJColors(
@@ -59,6 +64,31 @@ fun OuterJoynAppearance.toCSSVariables(): String {
     vars.add("--oj-error: ${colors.error.toHex()}")
     vars.add("--oj-radius: ${shapes.cornerRadiusDp.toInt()}px")
     return vars.joinToString(";\n") + ";"
+}
+
+/**
+ * The appearance as the hosted widget reads it (the web SDK's `appearance`):
+ * the colours and corners when the app set its own appearance, plus the
+ * device's light or dark mode.
+ */
+fun OuterJoynAppearance.toWebAppearance(deviceDark: Boolean): JSONObject? {
+    val out = JSONObject()
+    if (this.copy(followDeviceColorScheme = true) != OuterJoynAppearance()) {
+        out.put("variables", JSONObject().apply {
+            put("colorPrimary", colors.primary.toHex())
+            put("colorAccent", colors.accent.toHex())
+            put("colorBackground", colors.background.toHex())
+            put("colorSurface", colors.surface.toHex())
+            put("colorText", colors.text.toHex())
+            put("colorTextMuted", colors.textMuted.toHex())
+            put("colorBorder", colors.border.toHex())
+            put("colorSuccess", colors.success.toHex())
+            put("colorError", colors.error.toHex())
+            put("borderRadius", "${shapes.cornerRadiusDp.toInt()}px")
+        })
+    }
+    if (followDeviceColorScheme) out.put("deviceColorScheme", if (deviceDark) "dark" else "light")
+    return if (out.length() == 0) null else out
 }
 
 private fun Color.toHex(): String {
