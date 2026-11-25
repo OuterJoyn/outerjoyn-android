@@ -25,7 +25,7 @@ package com.outerjoyn.sdk
  */
 object OuterJoynSDK {
     // Keep equal to the publication version in build.gradle.kts.
-    const val VERSION = "1.5.2"
+    const val VERSION = "1.5.3"
 
     var appearance = OuterJoynAppearance()
         private set
@@ -98,5 +98,11 @@ data class OJWidgetConfig(
      * on its sign-in; several are the whole list. An id the store can't link
      * ends on an error with code `partner_not_linkable`.
      */
-    val partners: List<String>? = null
+    val partners: List<String>? = null,
+    /**
+     * The session answer's `link_ticket` (connect widget only): the first link
+     * starts the partner's sign-in without one more request. Pass it with
+     * `sessionToken` whenever your server's session answer has one.
+     */
+    val linkTicket: String? = null
 )

@@ -132,6 +132,7 @@ private fun OJWebView(
         config.direction?.let { put("direction", it) }
         config.lockTargetToBrand?.let { put("lockTargetToBrand", it) }
         config.partners?.let { put("partners", JSONArray(it)) }
+        config.linkTicket?.let { put("linkTicket", it) }
         // Connect fills the sheet edge to edge instead of drawing its own card.
         if (widget == OJWidget.Connect) put("presentation", "sheet")
         webAppearance?.let { put("appearance", it) }

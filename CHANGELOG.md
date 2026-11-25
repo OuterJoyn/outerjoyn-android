@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.3 (beta)
+
+- `OJWidgetConfig(linkTicket = ...)`: pass the session answer's `link_ticket` with the session token, and the first link opens the partner's sign-in without one more request.
+
 ## 1.5.2 (beta)
 
 - `OuterJoynPromotions` (Compose) and `OuterJoynPromotionsView` (a WebView) show a promotion set's offers inline, sized to fit. Pass `layout` and `look` (any saved set setting) for this spot only. Web pages and app links from offer buttons open outside the view; link and rewards buttons open the kit's sheet.

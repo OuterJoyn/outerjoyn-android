@@ -57,7 +57,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.OuterJoyn"
             artifactId = "outerjoyn-android"
-            version = "1.5.2"
+            version = "1.5.3"
 
             // AGP creates the "release" component during its own evaluation.
             afterEvaluate {
